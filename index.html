@@ -337,6 +337,58 @@
     /* ===== Simple fade in ===== */
     .fade-in{ opacity: 0; transform: translateY(8px); }
     .fade-in.show{ opacity: 1; transform: translateY(0); transition: all .6s ease; }
+
+    /* ===== NAV RESPONSIVE ===== */
+.menu-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: white;
+  font-size: 20px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* mobile menu container */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 80px;
+  right: 18px;
+  background: rgba(15, 20, 40, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 14px 18px;
+  color: white;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.mobile-menu a:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* responsive behavior */
+.desktop { display: flex; }
+.mobile { display: none; }
+
+@media (max-width: 768px) {
+  .desktop { display: none; }
+  .mobile { display: block; }
+}
+
   </style>
 </head>
 
@@ -345,17 +397,31 @@
 
     <!-- ===== NAV ===== -->
     <div class="nav">
-      <div class="brand">
-        <div class="dot"></div>
-        <div>Jocelyn Etania Li</div>
-      </div>
-      <div class="navlinks">
-        <a class="chip" href="#experience">Experience</a>
-        <a class="chip" href="#education">Education</a>
-        <a class="chip" href="#skills">Skills</a>
-        <a class="chip" href="#contact">Contact</a>
-      </div>
-    </div>
+  <div class="brand">
+    <div class="dot"></div>
+    <div>Jocelyn Etania Li</div>
+  </div>
+
+  <!-- Desktop menu -->
+  <div class="navlinks desktop">
+    <a class="chip" href="#experience">Experience</a>
+    <a class="chip" href="#education">Education</a>
+    <a class="chip" href="#skills">Skills</a>
+    <a class="chip" href="#contact">Contact</a>
+  </div>
+
+  <!-- Mobile toggle button -->
+  <button class="menu-btn mobile" id="menuBtn">☰</button>
+</div>
+
+<!-- Mobile dropdown menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#experience">Experience</a>
+  <a href="#education">Education</a>
+  <a href="#skills">Skills</a>
+  <a href="#contact">Contact</a>
+</div>
+
 
     <!-- ===== HERO ===== -->
     <div class="hero">
@@ -692,6 +758,21 @@
         copyText(text);
       });
     });
+// ===== Mobile menu toggle =====
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+  mobileMenu.style.display =
+    mobileMenu.style.display === "block" ? "none" : "block";
+});
+
+// close menu after click
+mobileMenu.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileMenu.style.display = "none";
+  });
+});
 
     // ===== copy website link button =====
     const btnCopyWebsite = document.getElementById("btnCopyWebsite");
