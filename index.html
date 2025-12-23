@@ -1,28 +1,703 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Jocelyn Etania Li</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jocelyn Etania Li | Portfolio</title>
+
+  <!-- ====== STYLE (CSS) ====== -->
+  <style>
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,0.08);
+      --card2: rgba(255,255,255,0.06);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --soft: rgba(255,255,255,0.12);
+      --border: rgba(255,255,255,0.14);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+      --radius: 18px;
+      --max: 1050px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(120, 90, 255, 0.35), transparent 60%),
+                  radial-gradient(900px 600px at 90% 20%, rgba(0, 210, 255, 0.22), transparent 55%),
+                  radial-gradient(900px 700px at 50% 95%, rgba(255, 180, 80, 0.18), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 90px; }
+
+    /* ===== Top Nav ===== */
+    .nav{
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(10,16,30,0.55);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      border-radius: 999px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.20);
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: linear-gradient(135deg, rgba(120,90,255,1), rgba(0,210,255,1));
+      box-shadow: 0 0 0 6px rgba(120,90,255,0.15);
+    }
+    .navlinks{
+      display:flex; gap: 10px; flex-wrap: wrap; justify-content:flex-end;
+    }
+    .chip{
+      font-size: 13px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.10); color: var(--text); }
+
+    /* ===== Hero ===== */
+    .hero{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      .nav{ border-radius: 18px; }
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero-main{ padding: 26px; position: relative; overflow:hidden; }
+    .hero-main:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(600px 250px at 20% 10%, rgba(120,90,255,0.35), transparent 60%),
+                  radial-gradient(400px 220px at 80% 35%, rgba(0,210,255,0.28), transparent 55%);
+      pointer-events:none;
+      filter: blur(0px);
+      opacity: 0.9;
+    }
+    .hero-main > *{ position: relative; }
+
+    .h-title{
+      font-size: clamp(28px, 4vw, 44px);
+      margin: 0 0 6px;
+      letter-spacing: -0.6px;
+    }
+    .subtitle{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    .badges{ display:flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 18px; }
+    .badge{
+      font-size: 13px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.84);
+    }
+
+    .cta{
+      display:flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+    }
+    .btn{
+      cursor:pointer;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 14px;
+      display:inline-flex; align-items:center; gap: 8px;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.12); }
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(120,90,255,0.9), rgba(0,210,255,0.85));
+      border: 0;
+      color: rgba(8,10,16,0.92);
+    }
+    .btn.primary:hover{ filter: brightness(1.06); }
+
+    .hero-side{ padding: 18px; }
+    .side-title{
+      font-weight: 700; margin: 4px 0 10px; letter-spacing: -0.2px;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 110px 1fr;
+      gap: 8px 10px;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+    }
+    .k{ color: var(--muted); font-size: 13px; }
+    .v{ font-weight: 600; font-size: 13px; word-break: break-word; }
+
+    /* ===== Sections ===== */
+    section{ margin-top: 18px; }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px){
+      .grid2{ grid-template-columns: 1fr; }
+    }
+    .sec-head{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px;
+      margin: 20px 0 10px;
+    }
+    .sec-title{
+      font-size: 18px; margin: 0;
+      letter-spacing: -0.3px;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .panel{ padding: 18px; }
+    .panel.soft{
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    /* ===== Experience Cards ===== */
+    .xp{
+      display:flex; flex-direction: column;
+      gap: 12px;
+    }
+    .xp-item{
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .xp-item:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.09); }
+    .xp-top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap: 10px;
+      flex-wrap: wrap;
+    }
+    .xp-role{
+      font-weight: 800; letter-spacing: -0.2px;
+    }
+    .xp-tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .xp-desc{
+      margin: 10px 0 0;
+      color: rgba(255,255,255,0.82);
+      font-size: 14px;
+    }
+    .xp-desc ul{ margin: 8px 0 0 18px; padding:0; }
+    .xp-desc li{ margin: 6px 0; }
+
+    /* ===== Skills ===== */
+    .skills{
+      display:flex; flex-wrap: wrap; gap: 10px;
+      margin-top: 10px;
+    }
+    .pill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.06);
+      font-size: 13px;
+      color: rgba(255,255,255,0.84);
+    }
+
+    /* ===== Modal ===== */
+    .modal-backdrop{
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      z-index: 50;
+    }
+    .modal{
+      width: min(720px, 100%);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(14,18,34,0.92);
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .modal header{
+      padding: 14px 16px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .modal h3{ margin:0; font-size: 15px; letter-spacing: -0.2px; }
+    .close{
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 700;
+    }
+    .modal .body{ padding: 16px; color: rgba(255,255,255,0.86); font-size: 14px; }
+    .modal .body p{ margin: 0 0 10px; }
+    .copyline{
+      display:flex; gap:10px; align-items:center; flex-wrap: wrap;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.05);
+    }
+    .copyline code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,0.88);
+      word-break: break-all;
+    }
+    .copybtn{
+      margin-left:auto;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .toast{
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20, 25, 45, 0.90);
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 10px 12px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.9);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      display:none;
+      z-index: 60;
+      font-size: 13px;
+    }
+
+    /* ===== Footer ===== */
+    footer{
+      margin-top: 26px;
+      padding: 18px 4px;
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      text-align:center;
+    }
+
+    /* ===== Simple fade in ===== */
+    .fade-in{ opacity: 0; transform: translateY(8px); }
+    .fade-in.show{ opacity: 1; transform: translateY(0); transition: all .6s ease; }
+  </style>
 </head>
-<body style="font-family:Arial; padding:40px;">
 
-<h1>Jocelyn Etania Li</h1>
-<p>
-Undergraduate Student<br>
-Department of Information Management<br>
-Chaoyang University of Technology, Taiwan
-</p>
+<body>
+  <div class="wrap">
 
-<h2>Research Interests</h2>
-<ul>
-  <li>Smart Agriculture</li>
-  <li>Internet of Things (IoT)</li>
-  <li>AIoT</li>
-  <li>Computer Vision</li>
-</ul>
+    <!-- ===== NAV ===== -->
+    <div class="nav">
+      <div class="brand">
+        <div class="dot"></div>
+        <div>Jocelyn Etania Li</div>
+      </div>
+      <div class="navlinks">
+        <a class="chip" href="#experience">Experience</a>
+        <a class="chip" href="#education">Education</a>
+        <a class="chip" href="#skills">Skills</a>
+        <a class="chip" href="#contact">Contact</a>
+      </div>
+    </div>
 
-<p>Email: (email kamu)</p>
+    <!-- ===== HERO ===== -->
+    <div class="hero">
+      <div class="card hero-main fade-in">
+        <h1 class="h-title">Jocelyn Etania Li</h1>
+        <p class="subtitle">
+          Information Management student at Chaoyang University of Technology • Interested in IoT, AI, and web development.
+        </p>
 
+        <div class="badges">
+          <span class="badge">Taichung, Taiwan</span>
+          <span class="badge">IoT • Raspberry Pi</span>
+          <span class="badge">AI • Computer Vision</span>
+          <span class="badge">Full-Stack Web</span>
+        </div>
+
+        <div class="panel soft">
+          <div class="sec-head" style="margin:0 0 8px;">
+            <h2 class="sec-title" style="margin:0;">Summary</h2>
+            <span class="hint">Open to Internship</span>
+          </div>
+          <p style="margin:0; color: rgba(255,255,255,0.84); font-size:14px;">
+            Major in Information Management at Chaoyang University of Technology. I’ve worked on several projects related to IoT, AI, and web development—especially using Raspberry Pi for system integration and automation. I’m looking for an internship to improve my skills, learn from real projects, and apply what I’ve learned.
+          </p>
+
+          <div class="cta">
+            <button class="btn primary" id="btnContact">
+              ✉️ Quick Contact
+            </button>
+            <a class="btn" href="#experience" title="Jump to Experience">
+              🔎 View Projects
+            </a>
+            <button class="btn" id="btnCopyWebsite" title="Copy your website link">
+              🔗 Copy Website Link
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card hero-side fade-in">
+        <div class="side-title">Profile</div>
+        <div class="kv">
+          <div class="k">Phone</div><div class="v">0900064257</div>
+          <div class="k">Email</div><div class="v"><a href="mailto:jocelynetania.l@gmail.com">jocelynetania.l@gmail.com</a></div>
+          <div class="k">Location</div><div class="v">Taichung, Taiwan</div>
+          <div class="k">Language</div><div class="v">Chinese • English • Indonesian</div>
+          <div class="k">Certification</div><div class="v">Reallusion Certified Associate for iClone</div>
+        </div>
+
+        <div class="panel soft" style="margin-top: 14px;">
+          <div class="sec-head" style="margin:0 0 8px;">
+            <h2 class="sec-title" style="margin:0;">Highlights</h2>
+            <span class="hint">Spring 2025</span>
+          </div>
+          <ul style="margin: 0 0 0 18px; padding:0; color: rgba(255,255,255,0.82); font-size:14px;">
+            <li>Academic Ranking: <strong>2</strong> in class, <strong>3</strong> in department</li>
+            <li>GPA: <strong>4.19</strong></li>
+            <li>Focus: IoT + AI + Web dashboards</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== EXPERIENCE ===== -->
+    <section id="experience" class="fade-in">
+      <div class="sec-head">
+        <h2 class="sec-title">Experience & Projects</h2>
+        <div class="hint">Selected work</div>
+      </div>
+
+      <div class="xp">
+        <div class="xp-item">
+          <div class="xp-top">
+            <div>
+              <div class="xp-role">AI Smart Agriculture (Graduation Project)</div>
+              <div class="hint">Full-Stack • Raspberry Pi • AI + IoT</div>
+            </div>
+            <div class="xp-tag">Python • PHP • MySQL • Chart.js</div>
+          </div>
+          <div class="xp-desc">
+            <ul>
+              <li>Designed and built a full-stack web application using Python, PHP, HTML, CSS, JS, and MySQL.</li>
+              <li>Built a web dashboard with PHP, MySQL, and Chart.js to show sensor data and control the fan, lamp, and pump through Raspberry Pi.</li>
+              <li>Trained and labeled plant images using Roboflow; applied YOLOv5 via Flask + OpenCV to detect plant health and growth stages.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="xp-item">
+          <div class="xp-top">
+            <div>
+              <div class="xp-role">IoT Learning Support System (IoT Technology Final Project)</div>
+              <div class="hint">Team project • System design & implementation</div>
+            </div>
+            <div class="xp-tag">Raspberry Pi • Sensors • OLED • LINE Bot</div>
+          </div>
+          <div class="xp-desc">
+            <ul>
+              <li>Built a multi-function IoT learning system using Raspberry Pi with ultrasonic, DHT22, and photoresistor sensors, LED, OLED, and LINE Bot features.</li>
+              <li>Designed architecture and flowcharts; implemented core programs; handled video editing and documentation.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="xp-item">
+          <div class="xp-top">
+            <div>
+              <div class="xp-role">World Heritage Database Management System (DBMS Final Project)</div>
+              <div class="hint">Independent full-stack development</div>
+            </div>
+            <div class="xp-tag">PHP • MySQL • Frontend</div>
+          </div>
+          <div class="xp-desc">
+            <ul>
+              <li>Designed and built a full-stack web application using PHP, HTML, CSS, and MySQL.</li>
+              <li>Handled frontend, database, and backend development independently.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="xp-item">
+          <div class="xp-top">
+            <div>
+              <div class="xp-role">Social Media Marketing Project (Web & Social Media Marketing Final Project)</div>
+              <div class="hint">Analytics + Content strategy</div>
+            </div>
+            <div class="xp-tag">Instagram • Blogger • Google Analytics</div>
+          </div>
+          <div class="xp-desc">
+            <ul>
+              <li>Managed Instagram account: photography, editing, caption writing, and hashtag optimization.</li>
+              <li>Connected Blogger site with Google Analytics to track data and performance.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EDUCATION + ADDITIONAL ===== -->
+    <section id="education" class="fade-in">
+      <div class="sec-head">
+        <h2 class="sec-title">Education</h2>
+        <div class="hint">Academic background</div>
+      </div>
+
+      <div class="grid2">
+        <div class="card panel">
+          <div class="xp-top">
+            <div>
+              <div class="xp-role">Chaoyang University of Technology</div>
+              <div class="hint">Bachelor’s Degree • Information Management</div>
+            </div>
+            <div class="xp-tag">Sep 2022 — Present</div>
+          </div>
+          <div class="xp-desc">
+            <ul>
+              <li><strong>Academic Ranking:</strong> 2 in class, 3 in department (Spring 2025)</li>
+              <li><strong>GPA:</strong> 4.19</li>
+              <li><strong>Specialized Courses:</strong> Software Engineering, Web Programming, Database Management Systems, IoT Technology, IoT Applications, Data Structures, Information Communications Technology, AI Applications</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="sec-head" style="margin:0 0 10px;">
+            <h3 class="sec-title" style="margin:0;">Additional Information</h3>
+            <span class="hint">Skills & strengths</span>
+          </div>
+
+          <div>
+            <div class="hint">Technical Skills</div>
+            <div class="skills">
+              <span class="pill">Problem Solving</span>
+              <span class="pill">Fast Learner</span>
+              <span class="pill">Time Management</span>
+              <span class="pill">Data Analysis</span>
+              <span class="pill">Database Creation (MySQL)</span>
+            </div>
+
+            <div class="hint" style="margin-top:12px;">Programming</div>
+            <div class="skills">
+              <span class="pill">PHP</span>
+              <span class="pill">Python</span>
+              <span class="pill">HTML</span>
+              <span class="pill">CSS</span>
+              <span class="pill">JavaScript</span>
+            </div>
+
+            <div class="hint" style="margin-top:12px;">IoT Development</div>
+            <div class="skills">
+              <span class="pill">Raspberry Pi</span>
+              <span class="pill">System Integration</span>
+              <span class="pill">Automation</span>
+            </div>
+
+            <div class="hint" style="margin-top:12px;">Certifications</div>
+            <div class="skills">
+              <span class="pill">Reallusion Certified Associate (iClone)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact" class="fade-in">
+      <div class="sec-head">
+        <h2 class="sec-title">Contact</h2>
+        <div class="hint">Let’s connect</div>
+      </div>
+
+      <div class="card panel">
+        <p style="margin:0 0 10px; color: rgba(255,255,255,0.84);">
+          If you have internship opportunities or collaboration ideas, feel free to reach out.
+        </p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:jocelynetania.l@gmail.com?subject=Internship%20Opportunity%20-%20Jocelyn%20Etania%20Li">
+            ✉️ Email Me
+          </a>
+          <a class="btn" href="tel:0900064257">📞 Call</a>
+          <!-- Optional: Add your LinkedIn/GitHub links below -->
+          <!-- <a class="btn" href="https://www.linkedin.com/in/YOURNAME" target="_blank">in LinkedIn</a> -->
+          <!-- <a class="btn" href="https://github.com/lyn364-lll" target="_blank">🐙 GitHub</a> -->
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> Jocelyn Etania Li • Built with GitHub Pages
+    </footer>
+
+  </div>
+
+  <!-- ====== SIMPLE JS ====== -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Quick Contact">
+      <header>
+        <h3>Quick Contact</h3>
+        <button class="close" id="closeModal">✕</button>
+      </header>
+      <div class="body">
+        <p>You can copy my contact details quickly:</p>
+
+        <div class="copyline">
+          <span class="hint">Email</span>
+          <code id="emailText">jocelynetania.l@gmail.com</code>
+          <button class="copybtn" data-copy="emailText">Copy</button>
+        </div>
+
+        <div class="copyline" style="margin-top:10px;">
+          <span class="hint">Phone</span>
+          <code id="phoneText">0900064257</code>
+          <button class="copybtn" data-copy="phoneText">Copy</button>
+        </div>
+
+        <div class="copyline" style="margin-top:10px;">
+          <span class="hint">Location</span>
+          <code id="locText">Taichung, Taiwan</code>
+          <button class="copybtn" data-copy="locText">Copy</button>
+        </div>
+
+        <p style="margin-top:12px; color: rgba(255,255,255,0.72);">
+          Tip: You can also click “Email Me” to open your mail app directly.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied!</div>
+
+  <script>
+    // ===== footer year =====
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // ===== fade-in on load =====
+    window.addEventListener("load", () => {
+      document.querySelectorAll(".fade-in").forEach((el, i) => {
+        setTimeout(() => el.classList.add("show"), 120 + i*90);
+      });
+    });
+
+    // ===== modal open/close =====
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const btnContact = document.getElementById("btnContact");
+    const closeModal = document.getElementById("closeModal");
+
+    function openModal(){
+      modalBackdrop.style.display = "flex";
+      modalBackdrop.setAttribute("aria-hidden", "false");
+    }
+    function hideModal(){
+      modalBackdrop.style.display = "none";
+      modalBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    btnContact.addEventListener("click", openModal);
+    closeModal.addEventListener("click", hideModal);
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) hideModal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hideModal();
+    });
+
+    // ===== copy buttons =====
+    const toast = document.getElementById("toast");
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.style.display = "block";
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.style.display = "none", 1400);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("Copied!");
+      }catch(err){
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        showToast("Copied!");
+      }
+    }
+
+    document.querySelectorAll(".copybtn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-copy");
+        const text = document.getElementById(id).textContent.trim();
+        copyText(text);
+      });
+    });
+
+    // ===== copy website link button =====
+    const btnCopyWebsite = document.getElementById("btnCopyWebsite");
+    btnCopyWebsite.addEventListener("click", () => {
+      copyText(window.location.origin + window.location.pathname);
+    });
+  </script>
 </body>
 </html>
